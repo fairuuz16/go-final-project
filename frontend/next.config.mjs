@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        BACKEND_BASE_URL: 'http://localhost:8080',
+        BACKEND_BASE_URL: 'http://localhost:8000',
         NEXTAUTH_SECRET: 'my-secret'
     },
     images: {

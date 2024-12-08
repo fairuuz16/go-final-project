@@ -82,7 +82,7 @@ func main() {
 
 	err := router.Run()
 	if err != nil {
-		slog.Error("Failed to start the server", err)
+		slog.Error("Failed to start the server", "error", err)
 		panic(err)
 	}
 }
