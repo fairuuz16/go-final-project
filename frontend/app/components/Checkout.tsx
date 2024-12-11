@@ -12,7 +12,7 @@ import Link from "next/link";
 const Checkout = () => {
     const [mounted, setMounted] = useState(false);
     const {data: session, status} = useSession();
-    const cartItems = useSelector(state => state.cart.cartItems);
+    const cartItems = useSelector((state: any) => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.new_price, 0).toFixed(2);
     const currentUser = useMemo(() => session?.user, [session]);
     const {
@@ -114,7 +114,7 @@ const Checkout = () => {
                                         </div>
 
                                         <div className="md:col-span-5">
-                                            <label html="email">Email Address</label>
+                                            <label htmlFor="email">Email Address</label>
                                             <input
 
                                                 type="text" name="email" id="email"
@@ -124,7 +124,7 @@ const Checkout = () => {
                                                 placeholder="email@domain.com"/>
                                         </div>
                                         <div className="md:col-span-5">
-                                            <label html="phone">Phone Number</label>
+                                            <label htmlFor="phone">Phone Number</label>
                                             <input
                                                 {...register("phone", {required: true})}
                                                 type="number" name="phone" id="phone"
@@ -158,7 +158,7 @@ const Checkout = () => {
                                                     {...register("country", {required: true})}
                                                     name="country" id="country" placeholder="Country"
                                                     className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"/>
-                                                <button tabIndex="-1"
+                                                <button tabIndex={-1}
                                                         className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
                                                     <svg className="w-4 h-4 mx-2 fill-current"
                                                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -168,7 +168,7 @@ const Checkout = () => {
                                                         <line x1="6" y1="6" x2="18" y2="18"></line>
                                                     </svg>
                                                 </button>
-                                                <button tabIndex="-1"
+                                                <button tabIndex={-1}
                                                         className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
                                                     <svg className="w-4 h-4 mx-2 fill-current"
                                                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -198,7 +198,7 @@ const Checkout = () => {
                                                         <line x1="6" y1="6" x2="18" y2="18"></line>
                                                     </svg>
                                                 </button>
-                                                <button tabIndex="-1"
+                                                <button tabIndex={-1}
                                                         className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
                                                     <svg className="w-4 h-4 mx-2 fill-current"
                                                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
