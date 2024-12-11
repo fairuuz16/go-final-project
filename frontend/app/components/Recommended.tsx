@@ -5,7 +5,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // import required modules
-import { Navigation, Pagination } from "swiper/modules";
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import "swiper/css";
@@ -24,8 +24,11 @@ const Recommended: React.FC<Props> = ({books}) => {
             <h2 className="text-3xl font-semibold mb-3">Recommended For You</h2>
 
             <Swiper
+                modules={[A11y, Autoplay, Pagination, Navigation]}
                 slidesPerView={1}
                 spaceBetween={30}
+                loop={true}
+                autoplay={{ delay: 2000, disableOnInteraction: false }}
                 navigation={true}
                 breakpoints={{
                     640: {
@@ -45,7 +48,6 @@ const Recommended: React.FC<Props> = ({books}) => {
                         spaceBetween: 50,
                     },
                 }}
-                modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
                 {

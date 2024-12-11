@@ -4,7 +4,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // import required modules
-import { Navigation, Pagination } from 'swiper/modules';
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import BookCard from "@/app/components/BookCard";
 import { Book } from "@/app/types/book.type";
 
-const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure", "Education"]
+const categories = ["Choose a Genre", "Business", "Fiction", "Horror", "Adventure", "Education"]
 
 interface Props {
     books: Book[];
@@ -22,9 +22,9 @@ interface Props {
 
 const TopSellers: React.FC<Props> = ({books}) => {
 
-    const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
+    const [selectedCategory, setSelectedCategory] = useState("Choose a Genre");
 
-    const filteredBooks = selectedCategory === "Choose a genre" ? books : books.filter(book => book.category === selectedCategory.toLowerCase())
+    const filteredBooks = selectedCategory === "Choose a Genre" ? books : books.filter(book => book.category.toLowerCase() === selectedCategory.toLowerCase())
 
     return (
         <div className='py-8'>
@@ -44,9 +44,11 @@ const TopSellers: React.FC<Props> = ({books}) => {
             </div>
 
             <Swiper
+                modules={[A11y, Autoplay, Pagination, Navigation]}
                 slidesPerView={1}
                 spaceBetween={30}
-                navigation={true}
+                loop={true}
+                autoplay={{ delay: 2000, disableOnInteraction: false }}
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -65,7 +67,6 @@ const TopSellers: React.FC<Props> = ({books}) => {
                         spaceBetween: 50,
                     }
                 }}
-                modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
 
