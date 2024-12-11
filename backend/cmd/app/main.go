@@ -77,7 +77,7 @@ func main() {
 		api.POST("/books", bookHandler.CreateBook)
 		api.GET("/books", bookHandler.GetBooks)
 		api.GET("/books/:id", bookHandler.GetBookById)
-		api.PATCH("/books/:id", bookHandler.UpdateBook)
+		api.PUT("/books/:id", bookHandler.UpdateBook)
 	}
 
 	err := router.Run()

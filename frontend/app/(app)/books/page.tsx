@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Page: React.FC<Props> = () => {
-    return <BookList/>
+    return <BookList canEdit={false}/>
 };
 
 export default Page;

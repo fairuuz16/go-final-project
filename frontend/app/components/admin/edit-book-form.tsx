@@ -63,7 +63,7 @@ const EditBookForm = () => {
         }
 
         try {
-            await axios.patch(`${process.env.BACKEND_BASE_URL}/api/books/${book.id}`, formData, {
+            await axios.put(`${process.env.BACKEND_BASE_URL}/api/books/${book.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

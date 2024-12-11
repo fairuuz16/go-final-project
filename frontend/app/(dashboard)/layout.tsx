@@ -13,6 +13,7 @@ import { HiViewGridAdd } from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
 import LogoutButton from "@/app/components/admin/LogoutButton";
 import Preloader from "@/app/components/Preloader";
+import { LuAppWindow } from "react-icons/lu";
 
 interface Props {
     children: React.ReactNode;
@@ -38,9 +39,7 @@ const DashboardLayout: React.FC<Props> = async ({ children }) => {
                                     </div>
                                     <nav className="flex flex-col space-y-4">
                                         <Link href="/dashboard" className="flex items-center justify-start py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
-                                            <svg aria-hidden="true" className="h-6 w-6 mr-3">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                            </svg>
+                                            <LuAppWindow className="h-6 w-6 mr-3" /> 
                                             Dashboard
                                         </Link>
                                         <Link href="/dashboard/add-new-book" className="flex items-center justify-start py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
