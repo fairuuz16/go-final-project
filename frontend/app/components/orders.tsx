@@ -1,43 +1,52 @@
 "use client";
 
 import { useGetUserOrdersQuery } from "@/app/store/reducers/orders/ordersApi";
+import { Order } from "../types/order.type";
 
 const Orders = () => {
-    const {data: orders = [], isLoading, isError} = useGetUserOrdersQuery();
+    const { data: orders = [] as Order[], isLoading, isError } = useGetUserOrdersQuery();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
-    if (isError) return <div>Error getting orders data</div>;
+    if (isError) return <div className="text-center text-red-500">Error getting orders data</div>;
 
     return (
-        <div className='container mx-auto p-6'>
-            <h2 className='text-2xl font-semibold mb-4'>Your Orders</h2>
+        <div className="container mx-auto p-6">
+            <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Your Orders</h2>
             {
-                orders.length === 0 ? (<div>No orders found!</div>) : (<div>
-                    {
-                        orders.map((order, index) => (
-                            <div key={order.id} className="border-b mb-4 pb-4">
-                                <p className='p-1 bg-secondary text-white w-10 rounded mb-1'># {index + 1}</p>
-                                <h2 className="font-bold">Order ID: {order._id}</h2>
-                                <p className="text-gray-600">Name: {order.name}</p>
-                                <p className="text-gray-600">Email: {order.email}</p>
-                                <p className="text-gray-600">Phone: {order.phone}</p>
-                                <p className="text-gray-600">Total Price: ${order.total_price}</p>
-                                <h3 className="font-semibold mt-2">Address:</h3>
-                                <p> {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}</p>
-                                <h3 className="font-semibold mt-2">Books:</h3>
-                                <ul>
-                                    {order.books.map((book) => (
-                                        <li key={book.id}>{book.title}</li>
-                                    ))}
-                                </ul>
+                orders.length === 0 ? (
+                    <div className="text-center text-gray-500">No orders found!</div>
+                ) : (
+                    <div>
+                        {orders.map((order, index) => (
+                            <div key={order.id} className="bg-white p-6 rounded-lg shadow-md mb-6">
+                                <p className="p-2 bg-blue-500 text-white rounded-full mb-3 w-16 text-center">{`#${index + 1}`}</p>
+                                <h3 className="text-xl font-bold text-gray-800 mb-3">Order ID: {order.id}</h3>
+                                <p className="text-gray-600 mb-1"><strong>Name:</strong> {order.name}</p>
+                                <p className="text-gray-600 mb-1"><strong>Email:</strong> {order.email}</p>
+                                <p className="text-gray-600 mb-1"><strong>Phone:</strong> {order.phone}</p>
+                                <p className="text-gray-600 mb-3"><strong>Total Price:</strong> ${order.total_price}</p>
+                                
+                                <div className="border-t border-gray-300 mt-4 pt-4">
+                                    <h4 className="font-semibold text-gray-800">Address:</h4>
+                                    <p>{order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}</p>
+                                </div>
+
+                                <div className="border-t border-gray-300 mt-4 pt-4">
+                                    <h4 className="font-semibold text-gray-800">Books:</h4>
+                                    <ul className="list-disc pl-6 space-y-1">
+                                        {order.books.map((book) => (
+                                            <li key={book.id} className="text-gray-700">{book.title}</li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                        ))
-                    }
-                </div>)
+                        ))}
+                    </div>
+                )
             }
         </div>
-    )
+    );
 };
 
 export default Orders;
