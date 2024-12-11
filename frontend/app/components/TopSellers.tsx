@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import BookCard from "@/app/components/BookCard";
 import { Book } from "@/app/types/book.type";
 
-const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
+const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure", "Education"]
 
 interface Props {
     books: Book[];
@@ -27,8 +27,8 @@ const TopSellers: React.FC<Props> = ({books}) => {
     const filteredBooks = selectedCategory === "Choose a genre" ? books : books.filter(book => book.category === selectedCategory.toLowerCase())
 
     return (
-        <div className='py-10'>
-            <h2 className='text-3xl font-semibold mb-6'>Top Sellers</h2>
+        <div className='py-8'>
+            <h2 className='text-3xl font-semibold mb-3'>Top Sellers</h2>
             {/* category filtering */}
             <div className='mb-8 flex items-center'>
                 <select
