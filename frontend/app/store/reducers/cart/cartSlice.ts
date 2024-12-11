@@ -14,7 +14,7 @@ const cartSlice = createSlice({
             if (!existingItem) {
                 state.cartItems.push(action.payload)
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Book added to the cart",
                     showConfirmButton: false,
