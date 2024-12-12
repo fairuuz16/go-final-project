@@ -29,6 +29,11 @@
 
 ## Getting Started
 
+### Program Flow
+The application follows a clean architecture pattern, ensuring separation of concerns and maintainability.
+
+`request` > router > controller > service > repository > service > controller > router > `response`
+
 ### Backend
 
 1. Navigate to the backend directory:
@@ -43,7 +48,7 @@
 
 3. Run the server:
     ```bash
-    go run main.go
+    go run cmd\app\main.go
     ```
 
 ### Frontend
@@ -61,16 +66,9 @@
 3. Run the development server:
     ```bash
     npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
     ```
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-
-
-Youtube: https://youtu.be/Wbrka9jKW_g
+## Youtube 
+https://youtu.be/Wbrka9jKW_g
