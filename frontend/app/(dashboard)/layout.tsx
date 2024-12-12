@@ -31,7 +31,32 @@ const DashboardLayout: React.FC<Props> = async ({ children }) => {
                         <ReduxProvider>
                             <section className="flex min-h-screen bg-gray-100">
                                 {/* Sidebar */}
-                                <aside className="hidden sm:flex sm:flex-col bg-gray-800 text-gray-500 w-16 sm:w-64 p-4">
+                                <aside className="hidden sm:flex sm:flex-col">
+                                    <a href="/"
+                                    className="inline-flex items-center justify-center h-20 w-20 bg-purple-600 hover:bg-purple-500 focus:bg-purple-500">
+                                        <img src="/assets/fav-icon.png" alt=""/>
+                                    </a>
+                                    <div className="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
+                                        <nav className="flex flex-col mx-4 my-6 space-y-4">
+                                            <Link href="/dashboard"
+                                                className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                                                <span className="sr-only">Dashboard</span>
+                                                <LuAppWindow className="h-6 w-6"/>
+                                            </Link>
+                                            <Link href="/dashboard/add-new-book"
+                                                className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                                                <span className="sr-only">Add Book</span>
+                                                <HiViewGridAdd className="h-6 w-6"/>
+                                            </Link>
+                                            <Link href="/dashboard/manage-books"
+                                                className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                                                <span className="sr-only">Manage Books</span>
+                                                <MdOutlineManageHistory className="h-6 w-6"/>
+                                            </Link>
+                                        </nav>
+                                    </div>
+                                </aside>
+                                {/* <aside className="hidden sm:flex sm:flex-col bg-gray-800 text-gray-500 w-16 sm:w-64 p-4">
                                     <div className="flex items-center justify-center mb-8">
                                         <a href="/" className="inline-flex items-center justify-center h-16 w-16 bg-purple-600 hover:bg-purple-500 rounded-full">
                                             <img src="/assets/fav-icon.png" alt="Logo" />
@@ -54,7 +79,7 @@ const DashboardLayout: React.FC<Props> = async ({ children }) => {
                                     <div className="mt-auto border-t border-gray-700 pt-4">
                                         <LogoutButton />
                                     </div>
-                                </aside>
+                                </aside> */}
 
                                 {/* Main Content */}
                                 <div className="flex-grow p-6 sm:px-10 bg-white">
