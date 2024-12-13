@@ -32,7 +32,7 @@
 ### Program Flow
 The application follows a clean architecture pattern, ensuring separation of concerns and maintainability.
 
-`request` > router > controller > service > repository > service > controller > router > `response`
+`request` > router > controller/handler > service > repository > service > controller/handler > router > `response`
 
 ### Backend
 
