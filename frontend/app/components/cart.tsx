@@ -1,26 +1,50 @@
 "use client";
 
-import { clearCart, removeFromCart } from "@/app/store/reducers/cart/cartSlice";
+import { clearCart, removeFromCart, increaseQuantity, decreaseQuantity } from "@/app/store/reducers/cart/cartSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
 
 const Cart = () => {
-    const cartItems = useSelector(state => state.cart.cartItems);
+    const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch = useDispatch();
 
-    // Perbaikan: pastikan semua harga valid (parseFloat)
-    const totalPrice = cartItems.reduce((acc, item) => {
-        const itemPrice = parseFloat(item.new_price) || 0;  // Pastikan harga valid
-        return acc + itemPrice;
-    }, 0).toFixed(2); // Format angka dengan 2 decimal places
-
-    const handleRemoveFromCart = (product) => {
-        dispatch(removeFromCart(product));
+    // Calculate total price considering quantity
+    interface CartItem {
+        id: string;
+        title: string;
+        new_price: string;
+        cover_image: string;
+        category: string;
+        quantity?: number;
     }
+
+    interface RootState {
+        cart: {
+            cartItems: CartItem[];
+        };
+    }
+
+    const totalPrice = cartItems.reduce((acc: number, item: CartItem) => {
+        const itemPrice = parseFloat(item.new_price) || 0; // Default price to 0 if invalid
+        const itemQuantity = item.quantity || 1; // Default quantity to 1 if undefined
+        return acc + itemPrice * itemQuantity;
+    }, 0).toFixed(2);
+
+    const handleRemoveFromCart = (product: any) => {
+        dispatch(removeFromCart(product));
+    };
 
     const handleClearCart = () => {
         dispatch(clearCart());
-    }
+    };
+
+    const handleIncreaseQuantity = (product: any) => {
+        dispatch(increaseQuantity(product));
+    };
+
+    const handleDecreaseQuantity = (product: any) => {
+        dispatch(decreaseQuantity(product));
+    };
 
     return (
         <>
@@ -41,47 +65,59 @@ const Cart = () => {
 
                     <div className="mt-8">
                         <div className="flow-root">
-                            {
-                                cartItems.length > 0 ? (
-                                    <ul role="list" className="divide-y divide-gray-200">
-                                        {
-                                            cartItems.map((book) => (
-                                                <li key={book?.id} className="flex py-6 hover:bg-gray-50 transition-all duration-200">
-                                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
-                                                        <img
-                                                            alt={book?.title}
-                                                            src={`${process.env.BACKEND_BASE_URL}/` + book?.cover_image}
-                                                            className="h-full w-full object-cover object-center"
-                                                        />
-                                                    </div>
+                            {cartItems.length > 0 ? (
+                                <ul role="list" className="divide-y divide-gray-200">
+                                    {cartItems.map((book: CartItem) => (
+                                        <li key={book?.id} className="flex py-6 hover:bg-gray-50 transition-all duration-200">
+                                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
+                                                <img
+                                                    alt={book?.title}
+                                                    src={`${process.env.BACKEND_BASE_URL}/` + book?.cover_image}
+                                                    className="h-full w-full object-cover object-center"
+                                                />
+                                            </div>
 
-                                                    <div className="ml-4 flex-1 flex flex-col">
-                                                        <div className="flex justify-between text-base font-medium text-gray-900">
-                                                            <h3>
-                                                                <Link href="/">{book?.title}</Link>
-                                                            </h3>
-                                                            <p className="text-gray-700">${book?.new_price}</p>
-                                                        </div>
-                                                        <p className="mt-1 text-sm text-gray-500"><strong>Category: </strong>{book?.category}</p>
-                                                        <div className="flex flex-1 flex-wrap items-end justify-between space-y-2 text-sm mt-2">
-                                                            <p className="text-gray-500"><strong>Qty:</strong> 1</p>
-                                                            <button
-                                                                onClick={() => handleRemoveFromCart(book)}
-                                                                type="button"
-                                                                className="font-medium text-red-600 hover:text-red-500 transition duration-200"
-                                                            >
-                                                                Remove
-                                                            </button>
-                                                        </div>
+                                            <div className="ml-4 flex-1 flex flex-col">
+                                                <div className="flex justify-between text-base font-medium text-gray-900">
+                                                    <h3>
+                                                        <Link href="/">{book?.title}</Link>
+                                                    </h3>
+                                                    <p className="text-gray-700">${parseFloat(book?.new_price).toFixed(2)}</p>
+                                                </div>
+                                                <p className="mt-1 text-sm text-gray-500"><strong>Category: </strong>{book?.category}</p>
+                                                <div className="flex flex-1 flex-wrap items-end justify-between space-y-2 text-sm mt-2">
+                                                    <div className="flex items-center space-x-2">
+                                                        <button
+                                                            onClick={() => handleDecreaseQuantity(book)}
+                                                            type="button"
+                                                            className="font-medium text-gray-600 hover:text-gray-500 transition duration-200"
+                                                        >
+                                                            -
+                                                        </button>
+                                                        <p className="text-gray-500"><strong>Qty:</strong> {book?.quantity || 1}</p>
+                                                        <button
+                                                            onClick={() => handleIncreaseQuantity(book)}
+                                                            type="button"
+                                                            className="font-medium text-gray-600 hover:text-gray-500 transition duration-200"
+                                                        >
+                                                            +
+                                                        </button>
                                                     </div>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                ) : (
-                                    <p className="text-center text-gray-500">No book found in your cart!</p>
-                                )
-                            }
+                                                    <button
+                                                        onClick={() => handleRemoveFromCart(book)}
+                                                        type="button"
+                                                        className="font-medium text-red-600 hover:text-red-500 transition duration-200"
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-center text-gray-500">No book found in your cart!</p>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -89,7 +125,7 @@ const Cart = () => {
                 <div className="border-t border-gray-200 px-6 py-6 sm:px-6 bg-gray-50">
                     <div className="flex justify-between text-lg font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>${totalPrice}</p>  {/* Pastikan subtotal ditampilkan dengan benar */}
+                        <p>${totalPrice}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
 

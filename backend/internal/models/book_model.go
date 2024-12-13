@@ -1,8 +1,9 @@
 package models
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type BaseModel struct {
@@ -21,6 +22,7 @@ type Book struct {
 	CoverImage  string  `json:"cover_image" gorm:"type:varchar(255);not null"`
 	OldPrice    float64 `json:"old_price" gorm:"not null"`
 	NewPrice    float64 `json:"new_price" gorm:"not null"`
+	Qty		 int     `json:"qty" gorm:"null"`
 
 	//Orders []Order `gorm:"many2many:order_books;"` // many-to-many relationship
 }

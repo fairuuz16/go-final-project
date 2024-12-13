@@ -1,46 +1,70 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import Swal from "sweetalert2";
 
 const initialState = {
-    cartItems: []
+    cartItems: [],
 };
 
 const cartSlice = createSlice({
     name: 'cart',
-    initialState: initialState,
+    initialState,
     reducers: {
-        addToCart: (state, action) => {
+        addToCart(state, action) {
             const existingItem = state.cartItems.find(item => item.id === action.payload.id);
-            if (!existingItem) {
-                state.cartItems.push(action.payload)
+            if (existingItem) {
+                existingItem.quantity += 1;
                 Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: "Book added to the cart",
+                    title: "Item quantity updated in the cart",
                     showConfirmButton: false,
                     timer: 1500
                 });
-            } else (
+            } else {
+                state.cartItems.push({ ...action.payload, quantity: 1 });
                 Swal.fire({
-                    title: "Already added to the cart",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "OK!"
-                })
-            )
+                    position: "center",
+                    icon: "success",
+                    title: "Item added to the cart",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
         },
-        removeFromCart: (state, action) => {
-            state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id)
+        removeFromCart(state, action) {
+            state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
+            Swal.fire({
+                position: "center",
+                icon: "info",
+                title: "Item removed from the cart",
+                showConfirmButton: false,
+                timer: 1500
+            });
         },
-        clearCart: (state) => {
-            state.cartItems = []
-        }
-    }
-})
+        clearCart(state) {
+            state.cartItems = [];
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Cart cleared",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        },
+        increaseQuantity(state, action) {
+            const item = state.cartItems.find(item => item.id === action.payload.id);
+            if (item) {
+                item.quantity += 1;
+            }
+        },
+        decreaseQuantity(state, action) {
+            const item = state.cartItems.find(item => item.id === action.payload.id);
+            if (item && item.quantity > 1) {
+                item.quantity -= 1;
+            }
+        },
+    },
+});
 
-// export the actions
-export const {addToCart, removeFromCart, clearCart} = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
